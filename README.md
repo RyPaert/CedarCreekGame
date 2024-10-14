@@ -1,2 +1,2 @@
 # CedarCreekGame
- game of sword and sandalsish combat
+Game with Swords & Sandalish combat and the aesthetics of Dead by Daylight/WoW
