@@ -10,6 +10,7 @@ namespace CedarCreek.Data
 {
     public class CedarCreekContext : DbContext
     {
+        public CedarCreekContext(DbContextOptions<CedarCreekContext> options) : base(options) { }
         public DbSet<Character> Characters { get; set; }
     }
 }

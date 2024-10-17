@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CedarCreek.ApplicationServices\CedarCreek.ApplicationServices.csproj" />
     <ProjectReference Include="..\CedarCreek.Data\CedarCreek.Data.csproj" />
   </ItemGroup>
 
