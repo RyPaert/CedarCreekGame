@@ -13,10 +13,10 @@ namespace CedarCreek.Controllers
 		private readonly CedarCreekContext _context;
 		private readonly ICharactersServices _charactersServices;
 
-		public CharactersController(CedarCreekContext context, CharacterServices characterServices)
+		public CharactersController(CedarCreekContext context, ICharactersServices charactersServices)
 		{
 			_context = context;
-			_charactersServices = characterServices;
+			_charactersServices = charactersServices;
 		}
 		[HttpGet]
 		public IActionResult Index()

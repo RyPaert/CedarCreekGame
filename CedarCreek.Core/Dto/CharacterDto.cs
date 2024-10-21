@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace CedarCreek.Core.Dto
 {
-	internal class CharacterDto
-	{
 		public enum CharacterClass
 		{
 			Blight, Nurse, Survivor, Hillbilly
@@ -20,7 +19,7 @@ namespace CedarCreek.Core.Dto
 		{
 			Bronze, Iridescent, Gold, Silver
 		}
-		public class CharacterListIndexViewModel
+		public class CharacterDto
 		{
 			public Guid ID { get; set; }
 			public string CharacterName { get; set; }
@@ -39,13 +38,12 @@ namespace CedarCreek.Core.Dto
 			public CharacterRank CharacterRank { get; set; }
 			//db only
 
-			/*
-			 image
+			
+			//IMAGE
 			public List<IFormFile> Files {get; set;}
-			public IEnumerable<FileToDatabaseDto> Image {get; set;} =  new list<FileToDatabaseDto>();
-			  */
+			public IEnumerable<FileToDatabaseDto> Image {get; set;} =  new List<FileToDatabaseDto>();
+
 			public DateTime CreatedAt { get; set; }
 			public DateTime UpdatedAt { get; set; }
 		}
 	}
-}
