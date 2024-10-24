@@ -32,5 +32,11 @@ namespace CedarCreek.Controllers
 				});
 			return View(resultingInventory);
 		}
+		[HttpGet]
+		public IActionResult Create()
+		{
+			CharacterCreateViewModel vm = new();
+			return View("Create",vm);
+		}
 	}
 }
