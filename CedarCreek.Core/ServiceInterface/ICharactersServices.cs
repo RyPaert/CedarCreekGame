@@ -1,4 +1,5 @@
 ﻿using CedarCreek.Core.Domain;
+using CedarCreek.Core.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace CedarCreek.Core.ServiceInterface
 	public interface ICharactersServices
 	{
 		Task<Character> DetailsAsync(Guid id);
+
+		Task<Character> Create(CharacterDto dto);
 	}
 }

@@ -28,7 +28,7 @@ namespace CedarCreek.Controllers
 				{
 					ID = x.ID,
 					CharacterName = x.CharacterName,
-					CharacterClass = (CharacterClass)x.CharacterClass,
+					CharacterClass = (Models.Characters.CharacterClass)x.CharacterClass,
 					CharacterLevel = x.CharacterLevel,
 				});
 			return View(resultingInventory);
@@ -69,8 +69,9 @@ namespace CedarCreek.Controllers
 
 			if (result != null)
 			{
-				return RedirectToAction("Index");
+				return RedirectToAction("Index", vm);
 			}
+			return View(vm);
 		}
 	}
 }
