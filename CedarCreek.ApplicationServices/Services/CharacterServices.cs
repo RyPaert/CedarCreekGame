@@ -59,10 +59,19 @@ namespace CedarCreek.ApplicationServices.Services
             {
                 _fileServices.UploadFilesToDatabase(dto, character);
             }
-            await _context.Characters.AddAsync(character);
+            _context.Characters.Update(character);
             await _context.SaveChangesAsync();
 
             return character;
+        }
+        public async Task<Character> Delete(Guid id)
+        {
+            var result = await _context.Characters
+                .FirstOrDefaultAsync(x => x.ID == id);
+            _context.Characters.Remove(result);
+            await _context.SaveChangesAsync();
+
+            return result;
         }
     }
 }

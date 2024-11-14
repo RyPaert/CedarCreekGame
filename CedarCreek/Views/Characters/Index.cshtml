@@ -16,6 +16,7 @@
 				<th scope="col">Status</th>
 				<th scope="col">Level</th>
 				<th scope="col">Rank</th>
+				<th scope="col">Admin actions</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,6 +30,13 @@
 					<td>@character.CharacterStatus</td>
 					<td>@character.CharacterLevel</td>
 					<td>@character.CharacterRank</td>
+					<td>
+						<a asp-action="details" asp-controller="characters" asp-route-id="@character.ID" class="btn btn-info">CharacterDetails</a>
+						<br />
+						<a asp-action="update" asp-controller="characters" asp-route-id="@character.ID" class="btn btn-info">CharacterConfigure</a>		
+						<br />
+						<a asp-action="delete" asp-controller="characters" asp-route-id="@character.ID" class="btn btn-info">CharacterDelete</a>
+					</td>
 				</tr>
 				rowNumber++;
 			}

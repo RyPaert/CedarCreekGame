@@ -13,5 +13,7 @@ namespace CedarCreek.Core.ServiceInterface
 		Task<Character> DetailsAsync(Guid id);
 
 		Task<Character> Create(CharacterDto dto);
+		Task<Character> Update(CharacterDto dto);
+		Task<Character> Delete(Guid id);
 	}
 }

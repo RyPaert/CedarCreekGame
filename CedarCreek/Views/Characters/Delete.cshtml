@@ -1,0 +1,10 @@
+﻿@model CedarCreek.Models.Characters.CharacterDeleteViewModel
+<h1> @Html.DisplayFor(model)</h1>
+<div class="form-group row">
+	<label asp-></label>
+</div>
+<form asp-action="DeleteConfirmation">
+	<input type="hidden" asp-for="ID"/>
+	<input type="submit" value="Delete" class="btn btn-danger"/>
+	<a asp-action="Index" asp-controller="characters" class="btn btn-secondary danger"></a>
+</form>
