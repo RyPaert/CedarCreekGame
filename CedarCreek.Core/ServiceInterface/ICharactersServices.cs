@@ -11,9 +11,8 @@ namespace CedarCreek.Core.ServiceInterface
 	public interface ICharactersServices
 	{
 		Task<Character> DetailsAsync(Guid id);
-
 		Task<Character> Create(CharacterDto dto);
-		Task<Character> Update(CharacterDto dto);
 		Task<Character> Delete(Guid id);
+		Task<Character>Update(CharacterDto dto);
 	}
 }

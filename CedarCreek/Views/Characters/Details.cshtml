@@ -1,7 +1,8 @@
-﻿@model CedarCreek.Models.Characters.CharacterDeleteViewModel
-<h1> @Html.DisplayFor(model => model.CharacterName)</h1>
+﻿@model CedarCreek.Models.Characters.CharacterDetailsViewModel
 
-<div class="form-group row">
+<h1>@Html.DisplayFor(model => model.CharacterName)</h1>
+
+<div>
     <h4>Placeholder text I dont know what the fuck this is</h4>
     <hr />
     <dl class="row">
@@ -18,7 +19,7 @@
         <div id="imagediv">
             @foreach (var image in Model.Image)
             {
-                <partial name="_Images" model="image" />
+                <partial name="_Images" model="image"/>
             }
         </div>
 
@@ -61,12 +62,6 @@
             @Html.DisplayFor(model => model.SpecialAttackPower)
         </div>
     </dl>
+
+    <a asp-action="Index" asp-controller="characters" class="btn btn-secondary">Index</a>
 </div>
-
-
-
-<form asp-action="DeleteConfirmation">
-	<input type="hidden" asp-for="ID"/>
-	<input type="submit" value="Delete" class="btn btn-danger"/>
-	<a asp-action="Index" asp-controller="characters" class="btn btn-secondary danger"></a>
-</form>

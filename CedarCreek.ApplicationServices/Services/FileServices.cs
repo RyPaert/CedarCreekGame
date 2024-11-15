@@ -56,6 +56,7 @@ namespace CedarCreek.ApplicationServices.Services
             {
                 File.Delete(filePath);
             }
+
             _context.FilesToDatabase.Remove(imageID);
             await _context.SaveChangesAsync();
 

@@ -7,6 +7,9 @@ using CedarCreek.Core.Dto;
 using CedarCreek.Core.Domain;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore;
+using CharacterClass = CedarCreek.Core.Domain.CharacterClass;
+using CharacterStatus = CedarCreek.Core.Domain.CharacterStatus;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace CedarCreek.Controllers
 {
@@ -42,9 +45,10 @@ namespace CedarCreek.Controllers
 		public IActionResult Create()
 		{
 			CharacterCreateViewModel vm = new();
-			return View("Create",vm);
+			return View("Create", vm);
 		}
-		[HttpPost]
+		[HttpPost, ActionName("Create")]
+		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(CharacterCreateViewModel vm)
 		{
 			var dto = new CharacterDto
@@ -72,10 +76,46 @@ namespace CedarCreek.Controllers
             };
 			var result = await _charactersServices.Create(dto);
 
-			if (result != null)
+			if (result == null)
 			{
-				return RedirectToAction("Index", vm);
+				return RedirectToAction("Index");
 			}
+            return RedirectToAction("Index", vm);
+        }
+		[HttpGet]
+		public async Task<IActionResult> Details(Guid id)
+		{
+			var character = await _charactersServices.DetailsAsync(id);
+
+			if (character == null)
+			{
+				return NotFound();
+			}
+
+			var images = await _context.FilesToDatabase
+				.Where(c => c.CharacterID == id)
+				.Select(y => new CharacterImageViewModel
+				{
+				CharacterID = y.ID,
+					ImageID = y.ID,
+					ImageData = y.ImageData,
+					ImageTitle = y.ImageTitle,
+					Image = string.Format("data:image/gif;base64{0}", Convert.ToBase64String(y.ImageData))
+				}).ToArrayAsync();
+			var vm = new CharacterDetailsViewModel();
+            vm.CharacterName = vm.CharacterName;
+            vm.CharacterHealth = 100;
+            vm.CharacterXP = 0;
+            vm.CharacterXPNextLevel = 100;
+            vm.CharacterLevel = 0;
+			vm.CharacterClass = (Models.Characters.CharacterClass)character.CharacterClass;
+			vm.CharacterStatus = (Models.Characters.CharacterStatus)character.CharacterStatus;
+            vm.PrimaryAttackName = vm.PrimaryAttackName;
+            vm.PrimaryAttackPower = vm.PrimaryAttackPower;
+            vm.SpecialAttackName = vm.SpecialAttackName;
+            vm.SpecialAttackPower = vm.SpecialAttackPower;
+            vm.CharacterCreationTime = vm.CharacterCreationTime;
+
 			return View(vm);
 		}
 		[HttpGet]
@@ -89,14 +129,35 @@ namespace CedarCreek.Controllers
 
 			var images = await _context.FilesToDatabase
 				.Where(x => x.CharacterID == id)
-				.Select(y => new CharacterImageViewModel)
+				.Select(y => new CharacterImageViewModel
 				{
 					CharacterID = y.ID,
-				}
-		}
+					ImageID = y.ID,
+					ImageData = y.ImageData,
+					ImageTitle = y.ImageTitle,
+					Image = string.Format("data:image/gif;base64{0}", Convert.ToBase64String(y.ImageData))
+				}).ToArrayAsync();
+
+            var vm = new CharacterCreateViewModel();
+            vm.CharacterName = vm.CharacterName;
+            vm.CharacterHealth = 100;
+            vm.CharacterXP = 0;
+            vm.CharacterXPNextLevel = 100;
+            vm.CharacterLevel = 0;
+            vm.CharacterClass = (Models.Characters.CharacterClass)character.CharacterClass;
+            vm.CharacterStatus = (Models.Characters.CharacterStatus)character.CharacterStatus;
+            vm.PrimaryAttackName = vm.PrimaryAttackName;
+            vm.PrimaryAttackPower = vm.PrimaryAttackPower;
+            vm.SpecialAttackName = vm.SpecialAttackName;
+            vm.SpecialAttackPower = vm.SpecialAttackPower;
+            vm.CharacterCreationTime = vm.CharacterCreationTime;
+
+			return View("Update", vm);
+        }
+		[HttpPost]
 		public async Task<IActionResult> Update(CharacterCreateViewModel vm)
 		{
-			var dto = new CharacterDto();
+			var dto = new CharacterDto()
 			{
 				ID = (Guid)vm.ID,
 				CharacterName = vm.CharacterName,
@@ -121,6 +182,12 @@ namespace CedarCreek.Controllers
 				}).ToArray(),
 			};
 			var result = await _charactersServices.Update(dto);
+			
+			if (result == null)
+			{
+				return RedirectToAction("Index"); 
+			}
+			return RedirectToAction("Index", vm);
 		}
 		[HttpGet]
 		public async Task<IActionResult> Delete(Guid id)
@@ -172,7 +239,7 @@ namespace CedarCreek.Controllers
 		[HttpPost]
 		public async Task<IActionResult> RemoveImage(CharacterImageViewModel vm)
 		{
-			var dto = new FileToDatabase()
+			var dto = new FileToDatabaseDto()
 			{
 				ID = vm.ImageID
 			};

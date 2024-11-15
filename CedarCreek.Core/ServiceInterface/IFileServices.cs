@@ -12,6 +12,5 @@ namespace CedarCreek.Core.ServiceInterface
     {
         void UploadFilesToDatabase(CharacterDto dto, Character realm);
         Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto);
-
-	}
+    }
 }

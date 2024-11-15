@@ -70,9 +70,11 @@
                </div>
             </div>
         </div>
-
-        <a asp-action="create" asp-controller="Characters" type="submit"
-        class="btn btn-primary" value="Pick Character">Create</a>
+        @{
+            var breakpoint = "";
+        }
+        <input asp-action="create" asp-controller="Characters" type="submit"
+        class="btn btn-primary" value="Pick Character">Create</input>
 
         <a asp-action="index" class="btn btn-primary">Cancel</a>
 

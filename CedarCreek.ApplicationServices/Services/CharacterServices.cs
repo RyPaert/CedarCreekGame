@@ -59,7 +59,7 @@ namespace CedarCreek.ApplicationServices.Services
             {
                 _fileServices.UploadFilesToDatabase(dto, character);
             }
-            _context.Characters.Update(character);
+            await _context.Characters.AddAsync(character);
             await _context.SaveChangesAsync();
 
             return character;
@@ -72,6 +72,43 @@ namespace CedarCreek.ApplicationServices.Services
             await _context.SaveChangesAsync();
 
             return result;
+        }
+
+        public async Task<Character> Update(CharacterDto dto)
+        {
+            Character character = new();
+
+            //Set by service
+            character.ID = Guid.NewGuid();
+            character.CharacterHealth = 100;
+            character.CharacterLevel = 0;
+            character.CharacterXP = 0;
+            character.CharacterXPNextLevel = 100;
+            character.CharacterLevel = 0;
+            character.CharacterStatus = Core.Domain.CharacterStatus.Healthy;
+            character.CreatedAt = DateTime.Now;
+
+
+            //Set by user
+            character.CharacterClass = (Core.Domain.CharacterClass)dto.CharacterClass;
+            character.PrimaryAttackName = dto.PrimaryAttackName;
+            character.PrimaryAttackPower = dto.PrimaryAttackPower;
+            character.SpecialAttackName = dto.SpecialAttackName;
+            character.SpecialAttackPower = dto.SpecialAttackPower;
+
+            //set for db
+            character.CreatedAt = DateTime.Now;
+            character.UpdatedAt = DateTime.Now;
+
+            //files
+            if (dto.Files != null)
+            {
+                _fileServices.UploadFilesToDatabase(dto, character);
+            }
+            _context.Characters.Update(character);
+            await _context.SaveChangesAsync();
+
+            return character;
         }
     }
 }
