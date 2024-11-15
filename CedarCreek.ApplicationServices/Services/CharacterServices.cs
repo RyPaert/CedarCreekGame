@@ -34,12 +34,13 @@ namespace CedarCreek.ApplicationServices.Services
 
             //Set by service
             character.ID = Guid.NewGuid();
+            character.CharacterName = dto.CharacterName;
             character.CharacterHealth = 100;
             character.CharacterLevel = 0;
             character.CharacterXP = 0;
             character.CharacterXPNextLevel = 100;
             character.CharacterLevel = 0;
-            character.CharacterStatus = Core.Domain.CharacterStatus.Healthy;
+            character.CharacterStatus = (Core.Domain.CharacterStatus)3;
             character.CreatedAt = DateTime.Now;
 
 
@@ -80,6 +81,7 @@ namespace CedarCreek.ApplicationServices.Services
 
             //Set by service
             character.ID = Guid.NewGuid();
+            character.CharacterName = dto.CharacterName;
             character.CharacterHealth = 100;
             character.CharacterLevel = 0;
             character.CharacterXP = 0;

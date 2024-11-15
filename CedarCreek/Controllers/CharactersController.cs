@@ -72,7 +72,7 @@ namespace CedarCreek.Controllers
 					ImageData = x.ImageData,
 					ImageTitle = x.ImageTitle,
 					CharacterID = x.CharacterID,
-				}).ToArray(),
+				}).ToArray()
             };
 			var result = await _charactersServices.Create(dto);
 
@@ -85,12 +85,18 @@ namespace CedarCreek.Controllers
 		[HttpGet]
 		public async Task<IActionResult> Details(Guid id)
 		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
 			var character = await _charactersServices.DetailsAsync(id);
 
 			if (character == null)
 			{
 				return NotFound();
 			}
+			
 
 			var images = await _context.FilesToDatabase
 				.Where(c => c.CharacterID == id)
