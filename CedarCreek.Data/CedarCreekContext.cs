@@ -13,5 +13,6 @@ namespace CedarCreek.Data
         public CedarCreekContext(DbContextOptions<CedarCreekContext> options) : base(options) { }
         public DbSet<Character> Characters { get; set; }
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
+        public DbSet<Realm> Realms { get; set; }
     }
 }
