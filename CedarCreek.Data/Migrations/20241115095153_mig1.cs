@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CedarCreek.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Migrat1 : Migration
+    public partial class mig1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,6 +37,20 @@ namespace CedarCreek.Data.Migrations
                 {
                     table.PrimaryKey("PK_Characters", x => x.ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "FilesToDatabase",
+                columns: table => new
+                {
+                    ID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ImageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    CharacterID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FilesToDatabase", x => x.ID);
+                });
         }
 
         /// <inheritdoc />
@@ -44,6 +58,9 @@ namespace CedarCreek.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Characters");
+
+            migrationBuilder.DropTable(
+                name: "FilesToDatabase");
         }
     }
 }

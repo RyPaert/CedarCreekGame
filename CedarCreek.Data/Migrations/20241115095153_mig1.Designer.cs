@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CedarCreek.Data.Migrations
 {
     [DbContext(typeof(CedarCreekContext))]
-    [Migration("20241024085541_InitMig1")]
-    partial class InitMig1
+    [Migration("20241115095153_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
