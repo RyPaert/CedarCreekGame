@@ -12,5 +12,6 @@ namespace CedarCreek.Core.Dto
         public string ImageTitle { get; set; }
         public byte[] ImageData { get; set; }
         public Guid? CharacterID { get; set; }
+        public Guid? RealmID { get; set; }
     }
 }

@@ -1,12 +1,6 @@
-﻿using CedarCreek.Models.Characters;
-
-namespace CedarCreek.Models.Realms
+﻿namespace CedarCreek.Models.Realms
 {
-	public enum RealmEffect
-	{
-		Frozen, Eclipsed, Normal
-	}
-	public class RealmListIndexViewModel
+	public class RealmCreateViewModel
 	{
 		public Guid ID { get; set; }
 		public string RealmName { get; set; }
