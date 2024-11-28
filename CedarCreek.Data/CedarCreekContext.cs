@@ -1,4 +1,5 @@
 ﻿using CedarCreek.Core.Domain;
+using CedarCreek.Core.ServiceInterface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

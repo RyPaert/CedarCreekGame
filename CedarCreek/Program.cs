@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICharactersServices, CharacterServices>();
 builder.Services.AddScoped<IFileServices, FileServices>();
+builder.Services.AddScoped<IRealmsServices, RealmsServices>();
 
 builder.Services.AddDbContext<CedarCreekContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
