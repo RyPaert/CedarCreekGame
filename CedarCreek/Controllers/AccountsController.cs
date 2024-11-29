@@ -110,5 +110,119 @@ namespace CedarCreek.Controllers
             }
         return View(model);
         }
+        [HttpGet]
+        [AllowAnonymous]
+
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    City = model.City,
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if(result.Succeeded)
+                {
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new {userId = user.Id, token = token}, Request.Scheme);
+                }
+                if (_signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("ListUsers", "Administrations");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                ViewBag.ErrorTitle = "You have successfully registered";
+                ViewBag.ErrorMessage = "Before you can log in, please click on the link in your email.";
+                return View("Error");
+            }
+            return View();
+        }
+        [HttpGet]
+        [AllowAnonymous] 
+        public async Task<IActionResult> ConfirmEmail(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = $"the user with id of ${userId} is not valid";
+                return View("NotFound");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                return View();
+            }
+            ViewBag.ErrorTitle = "Email can't be confirmed";
+            return View("Error");
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(string? returnURL)
+        {
+            LoginViewModel vm = new LoginViewModel()
+            {
+                returnURL = returnURL,
+            };
+                return View(vm);
+
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnURL)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null && !user.EmailConfirmed && (await _userManager.CheckPasswordAsync(user, model.Password)))
+                {
+                    ModelState.AddModelError(string.Empty, "Your email hasn't been confirmed yet. Please make sure to check your Email spam folder.");
+                    return View(model);
+                }
+                var result = await _signInManager.PasswordSignInAsync(model.Password, model.Password, model.RememberMe, true);
+                if (result.Succeeded)
+                {
+                    if(!string.IsNullOrEmpty(returnURL) && Url.IsLocalUrl(returnURL))
+                    {
+                        return Redirect(returnURL);
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+                if (result.IsLockedOut)
+                {
+                    return View("AccountLocked");
+                }
+                ModelState.AddModelError("", "Invalid Login Attempt, send me 500 bucks");
+            }
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
