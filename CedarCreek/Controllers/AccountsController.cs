@@ -158,7 +158,9 @@ namespace CedarCreek.Controllers
             }
             return RedirectToAction("ResetPasswordConfirmation", "Accounts");
         }
-
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPasswordConfirmation() { return View(); }
         [HttpGet]
         public IActionResult Register()
         {
