@@ -30,9 +30,9 @@ namespace CedarCreek.Core.Dto
 			public int CharacterHealth { get; set; }
 			public CharacterClass CharacterClass { get; set; }
 			public int PrimaryAttackPower { get; set; }
-			public int PrimaryAttackName { get; set; }
+			public string PrimaryAttackName { get; set; }
 			public int SpecialAttackPower { get; set; }
-			public int SpecialAttackName { get; set; }
+			public string SpecialAttackName { get; set; }
 			public DateTime CharacterCreationTime { get; set; }
 			public CharacterStatus CharacterStatus { get; set; }
 			public CharacterRank CharacterRank { get; set; }
