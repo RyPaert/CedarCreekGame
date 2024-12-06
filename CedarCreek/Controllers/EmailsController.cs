@@ -1,4 +1,5 @@
 ﻿using CedarCreek.Core.Dto;
+using CedarCreek.Core.ServiceInterface;
 using CedarCreek.Models.Emails;
 using Microsoft.AspNetCore.Mvc;
 
@@ -27,7 +28,7 @@ namespace CedarCreek.Controllers
                 Body = viewModel.Body,
             };
             _emailsServices.SendEmail(dto);
-            return RedirectToAction(nameof("Index"));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

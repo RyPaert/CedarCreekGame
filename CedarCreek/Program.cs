@@ -13,6 +13,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ICharactersServices, CharacterServices>();
 builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IAccountsServices, AccountsServices>();
+builder.Services.AddScoped<IEmailsServices, EmailsServices>();
 builder.Services.AddDbContext<CedarCreekContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -23,6 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         options.Lockout.MaxFailedAccessAttempts = 3;
         options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     })
+
     .AddEntityFrameworkStores<CedarCreekContext>()
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation")
