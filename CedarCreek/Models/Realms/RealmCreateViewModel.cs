@@ -8,5 +8,6 @@
 		public int CharacterLevelRequirement { get; set; }
 		public List<IFormFile> Files { get; set; }
 		public List<RealmImageViewModel> Image { get; set; } = new List<RealmImageViewModel>();
-	}
+
+    }
 }

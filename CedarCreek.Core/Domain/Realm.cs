@@ -17,5 +17,5 @@ namespace CedarCreek.Core.Domain
 		public RealmEffect RealmEffect { get; set; }
 		public int CharacterLevelRequirement { get; set; }
 		public DateTime CreatedAt { get; set; }
-	}
+    }
 }
