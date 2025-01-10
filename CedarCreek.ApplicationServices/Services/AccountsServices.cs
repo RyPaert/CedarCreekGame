@@ -14,15 +14,18 @@ namespace CedarCreek.ApplicationServices.Services
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IPlayerProfilesServices _playerProfilesServices;
 
         public AccountsServices
             (
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager
+            SignInManager<ApplicationUser> signInManager,
+            IPlayerProfilesServices playerProfilesServices
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _playerProfilesServices = playerProfilesServices;
         }
         public async Task<ApplicationUser> Register(ApplicationUserDto dto)
         {
@@ -31,6 +34,7 @@ namespace CedarCreek.ApplicationServices.Services
                 UserName = dto.UserName,
                 Email = dto.Email,
                 City = dto.City,
+                PlayerProfileID = dto.AssociatedPlayerProfile = await _playerProfilesServices.Create()
             };
             var result = await _userManager.CreateAsync(user, dto.Password);
             if (result.Succeeded)
