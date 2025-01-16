@@ -17,5 +17,6 @@ namespace CedarCreek.Data
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
         public DbSet<IdentityRole> IdentityRoles { get; set; }
         public DbSet<PlayerProfile> PlayerProfiles { get; set; }
+        public DbSet<Realm> Realms { get; set; }
     }
 }
