@@ -177,7 +177,6 @@ namespace CedarCreek.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     City = model.City,
-                    PlayerProfileID = dto.AssociatedPlayerProfile = await _playerprofileServices.Create()
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
 

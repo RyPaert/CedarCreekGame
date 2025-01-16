@@ -30,5 +30,18 @@ namespace CedarCreek.Controllers
             _emailsServices.SendEmail(dto);
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public IActionResult SendEmailToken(EmailViewModel viewModel, string token)
+        {
+            var dto = new EmailTokenDto()
+            {
+                To = viewModel.To,
+                Subject = viewModel.Subject,
+                Body = viewModel.Body,
+                Token = token
+            };
+            _emailsServices.SendEmailToken(dto, token);
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
