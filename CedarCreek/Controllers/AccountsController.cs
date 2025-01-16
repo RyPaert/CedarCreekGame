@@ -179,7 +179,6 @@ namespace CedarCreek.Controllers
                     City = model.City,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-
                 if(result.Succeeded)
                 {
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);

@@ -28,6 +28,7 @@ namespace CedarCreek.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> NewProfile(PlayerProfileDto dto)
         {
+            string userid = (string)TempData["NewUserID"];
             if (dto.ApplicationUserID == null)
             {
                 return RedirectToAction("Index");

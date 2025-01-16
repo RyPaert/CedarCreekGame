@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CedarCreek.Data.Migrations
 {
     [DbContext(typeof(CedarCreekContext))]
-    [Migration("20241204122443_reg1")]
-    partial class reg1
+    [Migration("20250116123702_AccountMig1")]
+    partial class AccountMig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,6 +134,11 @@ namespace CedarCreek.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
+
                     b.Property<string>("PrimaryAttackName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -154,6 +159,10 @@ namespace CedarCreek.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Characters");
+
+                    b.HasDiscriminator().HasValue("Character");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("CedarCreek.Core.Domain.FileToDatabase", b =>
@@ -176,6 +185,64 @@ namespace CedarCreek.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("FilesToDatabase");
+                });
+
+            modelBuilder.Entity("CedarCreek.Core.Domain.PlayerProfile", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ApplicationUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CurrentStatus")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gold")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Momentos")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ProfileType")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ScreenName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Victories")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("PlayerProfiles");
+                });
+
+            modelBuilder.Entity("CedarCreek.Core.Domain.Realm", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("CharacterLevelRequirement")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RealmEffect")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RealmName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Realms");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -311,6 +378,18 @@ namespace CedarCreek.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("CedarCreek.Core.Domain.CharacterOwnership", b =>
+                {
+                    b.HasBaseType("CedarCreek.Core.Domain.Character");
+
+                    b.Property<Guid?>("PlayerProfileID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasIndex("PlayerProfileID");
+
+                    b.HasDiscriminator().HasValue("CharacterOwnership");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -360,6 +439,18 @@ namespace CedarCreek.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("CedarCreek.Core.Domain.CharacterOwnership", b =>
+                {
+                    b.HasOne("CedarCreek.Core.Domain.PlayerProfile", null)
+                        .WithMany("MyCharacters")
+                        .HasForeignKey("PlayerProfileID");
+                });
+
+            modelBuilder.Entity("CedarCreek.Core.Domain.PlayerProfile", b =>
+                {
+                    b.Navigation("MyCharacters");
                 });
 #pragma warning restore 612, 618
         }
