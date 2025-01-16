@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace CedarCreek.Core.ServiceInterface
 {
-    public interface IFileServices
-    {
-        void UploadFilesToDatabase(CharacterDto dto, Character character);
-        Task<FileToDatabase> RemoveImageFromDatabase(FileToDatabaseDto dto);
-    }
+	public interface IRealmsServices
+	{
+		Task<Realm> Create(RealmDto dto);
+		Task<Realm> DetailsAsync(Guid id);
+	}
 }
