@@ -1,4 +1,5 @@
 ﻿using CedarCreek.Core.Domain;
+using CedarCreek.Core.Dto.AccountsDtos;
 using CedarCreek.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,17 +18,26 @@ namespace CedarCreek.Controllers
         {
             return View(_context.PlayerProfiles.OrderByDescending(x => x.ScreenName));
         }
-        public async Task<PlayerProfile> NewPlayerProfile(Guid userId)
+        [HttpGet]
+        public async Task<IActionResult> NewProfile()
         {
-            if (userId == Guid.Empty)
+            return View();
+        }
+
+        [HttpPost]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public async Task<IActionResult> NewProfile(PlayerProfileDto dto)
+        {
+            if (dto.ApplicationUserID == null)
             {
                 return RedirectToAction("Index");
             }
 
             var newprofile = new PlayerProfile()
             {
-                ID = Guid.NewGuid(),
-                ApplicationUserID = userId,
+                ID = dto.Id,
+                ApplicationUserID = dto.ApplicationUserID,
+                MyCharacters = new List<CharacterOwnership>(),
                 ScreenName = "",
                 Gold = 25,
                 Momentos = 0,
@@ -35,9 +45,17 @@ namespace CedarCreek.Controllers
                 CurrentStatus = ProfileStatus.Active,
                 ProfileType = false
             };
-            var result = await _context.PlayerProfiles();
-
+            var result = await _context.PlayerProfiles.AddAsync(newprofile);
+            if (result != null)
+            {
+                return View(Index());
+            }
             return null;
+        }
+        [HttpGet]
+        public async Task<IActionResult> NewPlayerProfile()
+        {
+            return View();
         }
     }
 }
