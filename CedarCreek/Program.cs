@@ -14,6 +14,8 @@ builder.Services.AddScoped<ICharactersServices, CharacterServices>();
 builder.Services.AddScoped<IFileServices, FileServices>();
 builder.Services.AddScoped<IAccountsServices, AccountsServices>();
 builder.Services.AddScoped<IEmailsServices, EmailsServices>();
+builder.Services.AddScoped<IPlayerProfilesServices, PlayerProfilesServices>();
+builder.Services.AddScoped<IRealmsServices, RealmsServices>();
 builder.Services.AddDbContext<CedarCreekContext>
     (options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
