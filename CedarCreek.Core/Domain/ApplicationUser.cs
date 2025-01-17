@@ -10,5 +10,7 @@ namespace CedarCreek.Core.Domain
     public class ApplicationUser : IdentityUser
     {
         public string City { get; set; }
+        public bool ProfileType  { get; set; } // true = admin
+        
     }
 }

@@ -15,5 +15,6 @@ namespace CedarCreek.Models.Accounts
         [Compare("Password", ErrorMessage = "Password does not match")]
         public string ConfirmPassword { get; set; }
         public string City { get; set; }
+        public bool ProfileType { get; set; } // admin = true
     }
 }
