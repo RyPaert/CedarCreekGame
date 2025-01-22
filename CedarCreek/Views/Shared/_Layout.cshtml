@@ -28,10 +28,10 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        @if(signInManager.IsSignedIn(User))
+                       @* @if(signInManager.IsSignedIn(User))
                         {
                             if (playerProfile.ProfileType == true)
-                            {
+                            { *@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Characters" asp-action="Index">My Characters</a>
                                 </li>
@@ -41,8 +41,8 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Register">Register</a>
                                 </li>
-                            }
-                        }                   
+                    @*        }
+                        }    *@
                     </ul>
                 </div>
             </div>
