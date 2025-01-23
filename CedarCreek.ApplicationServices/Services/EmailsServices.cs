@@ -39,9 +39,9 @@ namespace CedarCreek.ApplicationServices.Services
             dto.Token = token;
             var email = new MimeMessage();
 
-            _configuration.GetSection("EmailUserName").Value = "";
+            _configuration.GetSection("EmailUserName").Value = "thomashenrypaert";
             _configuration.GetSection("EmailHost").Value = "smtp.gmail.com";
-            _configuration.GetSection("EmailPassword").Value = "";
+            _configuration.GetSection("EmailPassword").Value = "mihi wmyc cxtm gdmd";
 
 
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUserName").Value));

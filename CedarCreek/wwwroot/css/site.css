@@ -35,7 +35,7 @@ td, th {
 .h1, h1 {
     color:white;
 }
-p {
+p, label {
     color: white;
 }
 .custom-file-label, label.col-sm-2.col-form-label {
