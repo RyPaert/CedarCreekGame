@@ -66,5 +66,76 @@ namespace CedarCreek.Controllers
 			}
 			return RedirectToAction("Index", vm);
 		}
+		[HttpGet]
+		public async Task<IActionResult> Details(Guid id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+			var Realm = await _realmsServices.DetailsAsync(id);
+
+			if (Realm == null)
+			{
+				return NotFound();
+			}
+
+            var images = await _context.FilesToDatabase
+			.Where(c => c.CharacterID == id)
+			.Select(y => new RealmImageViewModel 
+			{
+				RealmID = y.ID,
+				ImageID = y.ID,
+				ImageData = y.ImageData,
+				ImageTitle = y.ImageTitle,
+				Image = string.Format("data:image/gif;base64{0}", Convert.ToBase64String(y.ImageData))
+			}).ToArrayAsync();
+			var vm = new RealmDetailsViewModel();
+			vm.RealmName = vm.RealmName;
+			vm.RealmEffect = vm.RealmEffect;
+			vm.CharacterLevelRequirement = vm.CharacterLevelRequirement;
+			vm.Files = vm.Files;
+			return View(vm);
+        }
+		[HttpGet]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+			var Realm = await _realmsServices.DetailsAsync(id);
+
+			if (Realm == null)
+			{
+				return NotFound();
+			}
+
+			var images = await _context.FilesToDatabase
+			.Where(c => c.CharacterID == id)
+			.Select(y => new RealmImageViewModel
+			{
+				RealmID = y.ID,
+				ImageID = y.ID,
+				ImageData = y.ImageData,
+				ImageTitle = y.ImageTitle,
+				Image = string.Format("data:image/gif;base64{0}", Convert.ToBase64String(y.ImageData))
+			}).ToArrayAsync();
+			var vm = new RealmDetailsViewModel();
+			vm.RealmName = vm.RealmName;
+			vm.RealmEffect = vm.RealmEffect;
+			vm.CharacterLevelRequirement = vm.CharacterLevelRequirement;
+			vm.Files = vm.Files;
+			return View(vm);
+		}
+		[HttpPost]
+		public async Task<IActionResult> DeleteConfirmation(Guid id)
+		{
+			var realmToDelete = await _realmsServices.Delete(id);
+
+			if (realmToDelete == null) { return RedirectToAction("Index"); }
+
+			return RedirectToAction("Index");
+		}
 	}
 }

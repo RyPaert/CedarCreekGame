@@ -12,5 +12,6 @@ namespace CedarCreek.Core.ServiceInterface
 	{
 		Task<Realm> Create(RealmDto dto);
 		Task<Realm> DetailsAsync(Guid id);
+		Task<Realm> Delete(Guid id);
 	}
 }
