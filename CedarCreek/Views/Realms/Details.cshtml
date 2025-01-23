@@ -1,0 +1,43 @@
+﻿@model CedarCreek.Models.Realms.RealmDetailsViewModel
+
+<h1>@Html.DisplayFor(model => model.RealmName)</h1>
+
+<div class="row">
+	<h4>Realm Details</h4>
+	<hr />
+	<dl class="row"> 
+		<div class="form-group-row">
+			<label asp-for="ID" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.ID)
+		</div>
+		<div class="form-group-row">
+			<label asp-for="RealmName" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.RealmName)
+		</div>
+
+		<div id="imagediv">
+			@foreach (var image in Model.Image)
+			{
+				<partial name="_Images" model="image"/>
+			}
+		</div>
+
+		<div class="form-group row">
+			<label asp-for="RealmEffect" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.RealmEffect)
+		</div>
+		<div class="form-group row">
+			<label asp-for="CharacterLevelRequirement" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.CharacterLevelRequirement)
+		</div>
+		<div class="form-group row">
+			<label asp-for="Image" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(model => model.Image)
+		</div>
+	</dl>
+</div>
+<form asp-action="DeleteConfirmation">
+	<input type="hidden" asp-for="ID"/>
+	<input type="submit" value="Delete" class="btn btn-danger" />
+	<a asp-action="Index" asp-controller="realms" class="btn btn-secondary danger">Return</a>
+</form>

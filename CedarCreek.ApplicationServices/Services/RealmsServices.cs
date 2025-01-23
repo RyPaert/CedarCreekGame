@@ -43,5 +43,12 @@ namespace CedarCreek.ApplicationServices.Services
 
 			return realm;
 		}
+		public async Task<Realm> Delete (Guid id)
+		{
+			var result = await _context.Realms.FirstOrDefaultAsync(x => x.ID == id);
+			_context.Realms.Remove(result);
+			await _context.SaveChangesAsync();
+			return result;
+		}
 	}
 }
