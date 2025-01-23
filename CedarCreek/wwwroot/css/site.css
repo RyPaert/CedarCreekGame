@@ -5,6 +5,7 @@ html {
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+    
   }
 }
 
@@ -35,6 +36,9 @@ td, th {
     color:white;
 }
 p {
+    color: white;
+}
+.custom-file-label, label.col-sm-2.col-form-label {
     color: white;
 }
 .bg-white {

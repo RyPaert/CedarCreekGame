@@ -1,4 +1,5 @@
-﻿@model CedarCreek.Models.Characters.CharacterCreateViewModel
+﻿@using CedarCreek.Core.Domain
+@model CedarCreek.Models.Characters.CharacterCreateViewModel
 
 <div>
     <form method="post" enctype="multipart/form-data">
@@ -25,7 +26,9 @@
         <div class="form-group-row">
             <label asp-for="CharacterClass" class="col-sm-2 col-form-label"></label>
             <div class="col-sm-10">
-                <input asp-for="CharacterClass" class="form-control" />
+                <select asp-for="CharacterClass" asp-items="Html.GetEnumSelectList<CharacterClass>()">
+                    <option value="">Select Character Class</option>
+                </select>
             </div>
         </div>
 
@@ -54,12 +57,6 @@
                 <input asp-for="SpecialAttackPower" class="form-control" />
             </div>
         </div>
-        <div class="form-group-row">
-            <label asp-for="SpecialAttackPower" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-10">
-                <input asp-for="SpecialAttackPower" class="form-control" />
-            </div>
-        </div>
 
         <div class="form-group-row">
             <label asp-for="Files" class="col-sm-2 col-form-label"></label>
@@ -77,7 +74,7 @@
             var breakpoint = "";
         }
         <input asp-action="create" asp-controller="Characters" type="submit"
-        class="btn btn-primary" value="Pick Character">Create</input>
+        class="btn btn-primary form-text" value="Create Character"></input>
 
         <a asp-action="index" class="btn btn-primary">Cancel</a>
 

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CedarCreek.Data.Migrations
 {
     [DbContext(typeof(CedarCreekContext))]
-    [Migration("20250116123702_AccountMig1")]
-    partial class AccountMig1
+    [Migration("20250123120655_Migaaasa1")]
+    partial class Migaaasa1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,9 @@ namespace CedarCreek.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ProfileType")
                         .HasColumnType("bit");
 
                     b.Property<string>("SecurityStamp")
